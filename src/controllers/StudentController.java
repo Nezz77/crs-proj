@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import controllers.SceneLoader;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,40 +14,30 @@ public class StudentController {
 
     @FXML
     void handleDropCourse(ActionEvent event) {
-        loadScene(event, "/view/drop_course.fxml");
+        SceneLoader.loadScene(event, "/view/drop_course.fxml");
     }
 
     @FXML
     void handleLogout(ActionEvent event) {
-        loadScene(event, "/view/login.fxml");
+        SceneLoader.loadScene(event, "/view/login.fxml");
 
     }
 
     @FXML
     void handleRegisterForCourse(ActionEvent event) {
-        loadScene(event, "/view/register_course.fxml");
+        SceneLoader.loadScene(event, "/view/register_course.fxml");
     }
 
     @FXML
     void handleViewAcademicRecord(ActionEvent event) {
-        loadScene(event, "/view/view_academic_record.fxml");
+        SceneLoader.loadScene(event, "/view/view_academic_record.fxml");
     }
 
     @FXML
     void handleViewCourses(ActionEvent event) {
-        loadScene(event, "/view/view_courses.fxml");
+        SceneLoader.loadScene(event, "/view/view_courses.fxml");
     }
-    private void loadScene(ActionEvent event, String fxmlFile) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-            Parent root = loader.load();
-            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();  // Print error for debugging
-        }
-    }
+    
 
 }
 

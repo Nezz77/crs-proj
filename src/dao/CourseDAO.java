@@ -2,7 +2,6 @@ package dao;
 
 import model.Course;
 import model.Department;
-import dao.DBConnection;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,7 @@ public class CourseDAO {
     public List<Course> getAllCourses() {
         String query = "SELECT * FROM course";
         List<Course> courses = new ArrayList<>();
-        
+
         try (Connection conn = dao.DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
@@ -107,7 +106,7 @@ public class CourseDAO {
     // Get prerequisites for a course
     private List<String> getPrerequisites(Connection conn, String courseId) throws SQLException {
         List<String> prerequisites = new ArrayList<>();
-        String query = "SELECT prerequisite_id FROM course_prerequisites WHERE course_id = ?";
+        String query = "SELECT prerequisite_id FROM course_prerequisite WHERE course_id = ?";
 
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, courseId);
@@ -120,12 +119,30 @@ public class CourseDAO {
         return prerequisites;
     }
 
+    // Fetch department details by ID
+    private Department getDepartmentById(Connection conn, String departmentId) throws SQLException {
+        if (departmentId == null) {
+            return null;
+        }
+
+        String query = "SELECT department_id, name FROM department WHERE department_id = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, departmentId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return new Department(
+                    rs.getString("department_id"),
+                    rs.getString("name")
+                );
+            }
+        }
+        return null;
+    }
+
     // Helper function to map a ResultSet row to a Course object
     private Course mapResultSetToCourse(ResultSet rs, Connection conn) throws SQLException {
-        Department department = new Department(
-                rs.getString("department_id"),
-                rs.getString("department_name")  // Ensure department name is fetched properly
-        );
+        Department department = getDepartmentById(conn, rs.getString("department_id"));
 
         List<String> prerequisites = getPrerequisites(conn, rs.getString("course_id"));
 

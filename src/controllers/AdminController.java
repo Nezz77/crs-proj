@@ -41,6 +41,7 @@ public class AdminController {
 
     @FXML
     void handleManageCourses(ActionEvent event) {
+        System.out.println("BUTTON CLICKED");
 
     }
 
