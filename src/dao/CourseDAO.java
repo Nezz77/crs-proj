@@ -13,7 +13,7 @@ public class CourseDAO {
         String query = "SELECT * FROM course";
         List<Course> courses = new ArrayList<>();
 
-        try (Connection conn = dao.DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
 
@@ -30,7 +30,7 @@ public class CourseDAO {
     public Course getCourseById(String courseId) {
         String query = "SELECT * FROM course WHERE course_id = ?";
         
-        try (Connection conn = dao.DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, courseId);
@@ -49,7 +49,7 @@ public class CourseDAO {
     public boolean addCourse(Course course) {
         String query = "INSERT INTO course (course_id, title, credits, department_id, max_capacity) VALUES (?, ?, ?, ?, ?)";
         
-        try (Connection conn = dao.DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, course.getCourseId());
@@ -58,8 +58,7 @@ public class CourseDAO {
             pstmt.setString(4, course.getDepartment().getDepartmentId());
             pstmt.setInt(5, course.getMaxCapacity());
 
-            int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected > 0;
+            return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -70,7 +69,7 @@ public class CourseDAO {
     public boolean updateCourse(Course course) {
         String query = "UPDATE course SET title = ?, credits = ?, department_id = ?, max_capacity = ? WHERE course_id = ?";
         
-        try (Connection conn = dao.DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, course.getTitle());
@@ -79,8 +78,7 @@ public class CourseDAO {
             pstmt.setInt(4, course.getMaxCapacity());
             pstmt.setString(5, course.getCourseId());
 
-            int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected > 0;
+            return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -91,39 +89,32 @@ public class CourseDAO {
     public boolean deleteCourse(String courseId) {
         String query = "DELETE FROM course WHERE course_id = ?";
         
-        try (Connection conn = dao.DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, courseId);
-            int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected > 0;
+            return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
 
-    // Get prerequisites for a course
-    private List<String> getPrerequisites(Connection conn, String courseId) throws SQLException {
-        List<String> prerequisites = new ArrayList<>();
-        String query = "SELECT prerequisite_id FROM course_prerequisite WHERE course_id = ?";
-
-        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, courseId);
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                prerequisites.add(rs.getString("prerequisite_id"));
-            }
-        }
-        return prerequisites;
+    // Helper function to map a ResultSet row to a Course object
+    private Course mapResultSetToCourse(ResultSet rs, Connection conn) throws SQLException {
+        Department department = getDepartmentById(conn, rs.getString("department_id"));
+        return new Course(
+                rs.getString("course_id"),
+                rs.getString("title"),
+                rs.getInt("credits"),
+                department,
+                rs.getInt("max_capacity")
+        );
     }
 
     // Fetch department details by ID
     private Department getDepartmentById(Connection conn, String departmentId) throws SQLException {
-        if (departmentId == null) {
-            return null;
-        }
+        if (departmentId == null) return null;
 
         String query = "SELECT department_id, name FROM department WHERE department_id = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -131,28 +122,9 @@ public class CourseDAO {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                return new Department(
-                    rs.getString("department_id"),
-                    rs.getString("name")
-                );
+                return new Department(rs.getString("department_id"), rs.getString("name"));
             }
         }
         return null;
-    }
-
-    // Helper function to map a ResultSet row to a Course object
-    private Course mapResultSetToCourse(ResultSet rs, Connection conn) throws SQLException {
-        Department department = getDepartmentById(conn, rs.getString("department_id"));
-
-        List<String> prerequisites = getPrerequisites(conn, rs.getString("course_id"));
-
-        return new Course(
-                rs.getString("course_id"),
-                rs.getString("title"),
-                rs.getInt("credits"),
-                department,
-                rs.getInt("max_capacity"),
-                prerequisites
-        );
     }
 }

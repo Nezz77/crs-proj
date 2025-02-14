@@ -10,11 +10,21 @@ public class CourseService {
 
     // Get all courses
     public List<Course> getAllCourses() {
-        return courseDAO.getAllCourses();  // No SQLException expected
+        return courseDAO.getAllCourses();
     }
 
     // Add a new course
     public boolean addCourse(Course course) {
-        return courseDAO.addCourse(course);  // No SQLException expected
+        return courseDAO.addCourse(course);
+    }
+
+    // Update an existing course
+    public boolean updateCourse(Course course) {
+        return courseDAO.updateCourse(course);
+    }
+
+    // Delete a course
+    public boolean deleteCourse(String courseId) {
+        return courseDAO.deleteCourse(courseId);
     }
 }

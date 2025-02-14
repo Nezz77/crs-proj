@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10.0" alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.0" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.CourseController">
+
+    <Label text="Manage Courses" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <HBox spacing="10">
+        <VBox spacing="5">
+            <Label text="Course ID:"/>
+            <TextField fx:id="courseIdField" promptText="Enter Course ID"/>
+
+            <Label text="Title:"/>
+            <TextField fx:id="titleField" promptText="Enter Course Title"/>
+
+            <Label text="Credits:"/>
+            <TextField fx:id="creditsField" promptText="Enter Credits"/>
+
+            <Label text="Department ID:"/>
+            <TextField fx:id="departmentField" promptText="Enter Department ID"/>
+
+            <Label text="Max Capacity:"/>
+            <TextField fx:id="maxCapacityField" promptText="Enter Max Capacity"/>
+
+            <HBox spacing="10">
+                <Button fx:id="addCourseButton" text="Add Course" onAction="#handleAddCourse"/>
+                <Button fx:id="updateCourseButton" text="Update Course" onAction="#handleUpdateCourse"/>
+                <Button fx:id="deleteCourseButton" text="Delete Course" onAction="#handleDeleteCourse"/>
+            </HBox>
+        </VBox>
+
+        <VBox spacing="5">
+            <Label text="Courses List:"/>
+            <ListView fx:id="courseListView" prefHeight="200.0" prefWidth="300.0"/>
+        </VBox>
+    </HBox>
+</VBox>
