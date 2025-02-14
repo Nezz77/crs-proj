@@ -1,0 +1,19 @@
+{
+    "java.project.sourcePaths": [
+        "src"
+    ],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "/Users/mahesh/Documents/jbcrypt-0.4.jar",
+        "/Users/mahesh/crs-projectdel1/crs-proj1/lib/javafx.fxml.jar",
+        "/Users/mahesh/crs-projectdel1/crs-proj1/lib/jbcrypt-0.4.jar",
+        "/Users/mahesh/crs-projectdel1/crs-proj1/lib/javafx-swt.jar",
+        "/Users/mahesh/crs-projectdel1/crs-proj1/lib/javafx.media.jar",
+        "/Users/mahesh/crs-projectdel1/crs-proj1/lib/mysql-connector-j-8.1.0.jar",
+        "/Users/mahesh/crs-projectdel1/crs-proj1/lib/javafx.swing.jar",
+        "/Users/mahesh/crs-projectdel1/crs-proj1/lib/javafx.controls.jar",
+        "/Users/mahesh/crs-projectdel1/crs-proj1/lib/javafx.web.jar",
+        "/Users/mahesh/crs-projectdel1/crs-proj1/lib/javafx.base.jar",
+        "/Users/mahesh/crs-projectdel1/crs-proj1/lib/javafx.graphics.jar"
+    ]
+}

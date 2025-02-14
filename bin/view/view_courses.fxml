@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="353.0" prefWidth="543.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ViewCoursesController">
+    <children>
+        <TableView fx:id="courseTable" layoutX="70.0" layoutY="25.0" prefHeight="304.0" prefWidth="403.0">
+            <columns>
+                <TableColumn fx:id="courseIdColumn" prefWidth="100.0" text="Course ID">
+                    <cellValueFactory><PropertyValueFactory property="courseId" /></cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="titleColumn" prefWidth="200.0" text="Title">  
+                    <cellValueFactory><PropertyValueFactory property="title" /></cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="creditsColumn" prefWidth="100.0" text="Credits">
+                    <cellValueFactory><PropertyValueFactory property="credits" /></cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
+    </children>
+</AnchorPane>

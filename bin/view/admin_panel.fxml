@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminController">
+    <children>
+        <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" spacing="20.0" layoutX="50" layoutY="50">
+            <!-- Title -->
+            <Label text="Admin Panel" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+            <!-- Buttons for each admin panel option -->
+            <Button text="Manage Courses" prefWidth="200.0" onAction="#handleManageCourses"/>
+            <Button text="Manage Students" prefWidth="200.0" onAction="#handleManageStudents"/>
+            <Button text="Assign Faculty" prefWidth="200.0" onAction="#handleAssignFaculty"/>
+            <Button text="Generate Reports" prefWidth="200.0" onAction="#handleGenerateReports"/>
+            <Button text="Logout" prefWidth="200.0" onAction="#handleLogout" style="-fx-background-color: red; -fx-text-fill: white;"/>
+        </VBox>
+    </children>
+</AnchorPane>
