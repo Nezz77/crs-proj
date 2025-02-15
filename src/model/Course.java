@@ -57,6 +57,12 @@ public class Course {
                 ", prerequisites=" + (prerequisites != null ? prerequisites : "None") +
                 '}';
     }
+    //much better to string method if needed-----}}}}
+//     @Override
+//     public String toString() {
+//     return String.format("%s - %s (Credits: %d, Dept: %s, Max: %d)", 
+//         courseId, title, credits, department.getDepartmentId(), maxCapacity);
+// }
 
     // equals Method
     @Override
